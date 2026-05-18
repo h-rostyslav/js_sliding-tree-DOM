@@ -2,19 +2,13 @@
 
 const tree = document.querySelector('.tree');
 
-if (tree) {
   tree.addEventListener('click', (e) => {
-    if (e.target.tagName === 'SPAN') {
+    if (e.target.tagName !== 'SPAN') return;
       const parentLi = e.target.closest('li');
-      const list = parentLi ? parentLi.querySelector('ul') : null ;
+      if (!parentLi) return;
+    
+    const list = parentLi.querySelector(':scope > ul');
 
-      if (list) {
-        if (list.style.display === 'none') {
-          list.style.display = '';
-        } else {
-          list.style.display = 'none';
-        }
-      }
-    }
+      if (!list) return;
+      list.hidden = !list.hidden;
   });
-}

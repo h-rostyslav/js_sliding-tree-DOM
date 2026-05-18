@@ -2,13 +2,32 @@
 
 const tree = document.querySelector('.tree');
 
-  tree.addEventListener('click', (e) => {
-    if (e.target.tagName !== 'SPAN') return;
-      const parentLi = e.target.closest('li');
-      if (!parentLi) return;
-    
-    const list = parentLi.querySelector(':scope > ul');
+if (tree) {
+  const listItems = tree.querySelectorAll('li');
 
-      if (!list) return;
-      list.hidden = !list.hidden;
+  listItems.forEach((li) => {
+    const span = document.createElement('span');
+    span.textContent = li.firstChild.textContent.trim();
+    
+    li.firstChild.remove();
+    li.prepend(span);
   });
+
+  tree.addEventListener('click', (e) => {
+    if (e.target.tagName !== 'SPAN') {
+      return;
+    }
+
+    const parentLi = e.target.closest('li');
+    if (!parentLi) {
+      return;
+    }
+
+    const list = parentLi.querySelector(':scope > ul');
+    if (!list) {
+      return;
+    }
+
+    list.hidden = !list.hidden;
+  });
+}
